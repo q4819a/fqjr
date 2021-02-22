@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+</head>
+
+<body>
+
+    <input type="number" id="jifen" placeholder="要兑换的积分">
+    <br>
+    <input type="number" id="code" style="margin-top: 10px;" placeholder="验证码">
+    <br>
+    <button id="submit" style="margin-top: 10px;">提交</button>
+
+
+</body>
+
+
+<script>
+    $(document).ready(function () {
+        $("#submit").click(function () {
+
+            var jifen = $('#jifen').val();
+            var code = $('#code').val();
+            var data = JSON.stringify({
+                "appointmentCode": "1cc8a8ea51cd0adddf5dab504a285915",
+                "customerCode": "d47a9d6d910e47ad878710fc08d5d6e8",
+                "exchangeMoney": jifen,
+                "serviceCode": "fdcb694c6df04ae992f8b9f05a3c85c1",
+                "smsCode": code
+            });
+            var sign = md5(data+='bf424a45efe34f1a8c862ffd5d634c9d')
+            debugger
+
+            $.ajax({
+                type: "POST", url: 'http://api.fuqincaifu.com/api/service/exchangeCredits',
+                contentType: 'application/json',
+                dataType: "json",
+                data: JSON.stringify({
+                    "appointmentCode": "1cc8a8ea51cd0adddf5dab504a285915",
+                    "customerCode": "d47a9d6d910e47ad878710fc08d5d6e8",
+                    "exchangeMoney": jifen,
+                    "serviceCode": "fdcb694c6df04ae992f8b9f05a3c85c1",
+                    "smsCode": code,
+                    "sign": sign
+                }),
+                success: function (data) {
+                    alert(JSON.stringify(data));
+                }
+            })
+        }
+
+        );
+    }
+
+    );
+</script>
+
+
+</html>

@@ -19,6 +19,7 @@
     <br>
     <button id="submit" style="margin-top: 10px;">提交</button>
 
+    <p id="message"></p>
 
 </body>
 
@@ -37,8 +38,6 @@
                 "smsCode": code
             });
             var sign = md5(data+='bf424a45efe34f1a8c862ffd5d634c9d')
-            debugger
-
             $.ajax({
                 type: "POST", url: 'http://api.fuqincaifu.com/api/service/exchangeCredits',
                 contentType: 'application/json',
@@ -52,7 +51,7 @@
                     "sign": sign
                 }),
                 success: function (data) {
-                    alert(JSON.stringify(data));
+                    $('#message').text(JSON.stringify(data));
                 }
             })
         }
